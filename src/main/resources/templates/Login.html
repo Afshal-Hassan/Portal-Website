@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en"    xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="" th:href="@{/Css/Login.css}">
+  <link rel="stylesheet" href="" th:href="@{/Css/navbar.css}">
+  <link rel="stylesheet" href="" th:href="@{/Css/Signup.css}">
+  <script th:src="@{/Js/Login.js}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+
+     $(document).ready(function(){
+       $('#Submit23').click(function(){
+
+       var name=$('#username1').val();
+
+       var email=$('#email1').val();
+       var password=$('#password1').val();
+       var phoneNo=$('#phone').val();
+       var gender=$("input[name='gender']:checked").val();
+       var obj1={
+            Name:name,
+            Password:password,
+            Email:email,
+            PhoneNo:phoneNo,
+            Gender:gender
+       }
+
+       var myobj=JSON.stringify(obj1);
+       if (!$('#username1').val()) {
+
+            alert("Enter your name!");
+
+        }
+
+       else if(!$('#password1').val()){
+            alert("Enter your password");
+       }
+        else if(!$('#phone').val()){
+            alert("Enter your Phone Number");
+       }
+        else if($('input[name=gender]:checked').length == 0){
+            alert("Select Your Gender");
+       }
+        else if(!$('#email1').val()){
+            alert("Enter your Email");
+       }
+       else{
+        setTimeout(function(){
+         $('#signup').css("display","none");
+          $('.spinner').css("display","block");
+          $('#Submit23').hide();
+
+        },100)
+        $.ajax({
+           url:"/api",
+           type:"POST",
+           data:myobj,
+           contentType:"text/plain",
+
+           success:setTimeout(function(){
+            $('#signup').css("display","flex");
+          $('.spinner').css("display","none");
+           $('#Submit23').show();
+
+
+              $("#msg").html("Successfully Registered");
+             console.log("Send data");
+
+           },4000)
+
+
+         })
+
+        }
+
+       })
+     })
+
+
+  </script>
+
+
+
+
+
+
+</head>
+
+<body>
+<div id="banner1">
+  <nav id="navbar">
+    <div id="logo">
+      <img src="avatar.jpg">
+    </div>
+    <ul>
+      <li class="item"><a href="/">Home</a></li>
+      <li class="item"><a href="/login">Login</a></li>
+      <li class="item"><a href="/about">About Us</a></li>
+      <li class="item"><a href="#services">Services</a></li>
+      <li class="item"><a href="#contactus">Contact Us</a></li>
+    </ul>
+  </nav>
+  <section id="login">
+    <div>
+      <h2 id="heading">Login!</h2>
+
+      <fieldset>
+        <input type="text" id="username" placeholder="Username"><br>
+        <input type="email" id="email" placeholder="Email"><br>
+
+        <input type="password" id="password" placeholder="Password"><br>
+        <input type="submit" value="Login" id="submit">
+        <button id="signupbutton" onclick="signup()">Signup</button>
+
+
+
+      </fieldset>
+
+
+    </div>
+
+  </section>
+  <section id="signup">
+    <div id="signup1">
+      <h2 id="heading1">Signup!</h2>
+
+      <div id="msg" style="color:green; font-size:27px; margin-bottom:10px;"></div>
+      <form>
+        <fieldset>
+          <input type="text" id="username1" placeholder="Username" name="username1" autocomplete="off"><br>
+          <input type="email" id="email1" name="email1" placeholder="Email" autocomplete="off"><br>
+
+          <input type="password" name="password1" id="password1" placeholder="Password"><br>
+          <input type="tel" id="phone" name="phone" placeholder="+92" autocomplete="off">
+          <div id="radio123"> <input type="radio" name="gender" value="Male" class="radio" autocomplete="off"><span id="Male" >Male</span>
+
+            <input type="radio" name="gender" value="Female" class="radio" autocomplete="off"> <span id="Female" >Female</span>
+            <input type="radio" name="gender" value="Other" class="radio" autocomplete="off"> <span id="Others">Others</span>
+          </div>
+          <button id="submit1" onclick="login()">Login</button>
+          <button id="signupbutton1">Signup</button>
+
+
+
+        </fieldset>
+
+
+
+      </form>
+
+
+    </div>
+
+  </section>
+  <div class="bubbles1">
+    <img src="bubble.png">
+    <img src="bubble.png">
+    <img src="bubble.png">
+    <img src="bubble.png">
+    <img src="bubble.png">
+    <img src="bubble.png">
+    <img src="bubble.png">
+    <img src="bubble.png">
+    <img src="bubble.png">
+
+  </div>
+
+  <button id="Submit23" ><span></span>Submit</button>
+  <div class="spinner">
+
+  </div>
+
+</div>
+
+</body>
+
+</html>
